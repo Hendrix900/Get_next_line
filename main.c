@@ -29,7 +29,8 @@ int	main()
 	fd = open("iliada.txt", O_RDONLY);
 	b = get_next_line(fd, &a);
 	printf("%s %d\n", a, b);
-	b = get_next_line(fd, &a);
+	
+	/*b = get_next_line(fd, &a);
 	printf("%s %d\n", a, b);
 	b = get_next_line(fd, &a);
 	printf("%s %d\n", a, b);
@@ -37,7 +38,7 @@ int	main()
 	printf("%s %d\n", a, b);
 	b = get_next_line(fd, &a);
 	printf("%s %d\n", a, b);
-
+*/
 
 	return (0);
 }
