@@ -12,21 +12,6 @@
 
 #include "get_next_line.h"
 
-void	ft_bzero(void *s, size_t n)
-{
-	int				l;
-	unsigned char	*q;
-
-	q = (unsigned char*)s;
-	l = 0;
-	while (n > 0)
-	{
-		q[l] = 0;
-		l++;
-		n--;
-	}
-}
-
 char	*ft_strchr(const char *s, int c)
 {
 	while (*s)

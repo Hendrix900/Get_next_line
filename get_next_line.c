@@ -31,7 +31,8 @@ static int	ft_comp_new_line(char **s, char **line)
 	else if ((*s)[l] == '\0')
 	{
 		*line = ft_strdup(*s);
-		ft_bzero(*s, 1);
+		free(*s);
+		*s = NULL;
 		return (0);
 	}
 	return (1);
@@ -43,7 +44,9 @@ static int	ft_comp(int bwr, int fd, char **s, char **line)
 		return (-1);
 	else if (bwr == 0 && s[fd] == NULL)
 	{
+		*line = ft_strdup("");
 		free(*s);
+		*s = NULL;
 		return (0);
 	}
 	else
@@ -57,9 +60,10 @@ int			get_next_line(int fd, char **line)
 	char		*tmp;
 	int			bwr;
 
-	if (fd < 0 || line == 0)
-		return (-1);
-	while ((bwr = read(fd, buff, BUFFER_SIZE)) != '\0')
+	if (!(buff = malloc (sizeof(char)) * (BUFFER_SIZE + 1))) 
+			|| fd < 0 || line == 0)
+			return (-1);
+	while ((bwr = read(fd, buff, BUFFER_SIZE)) > 0)
 	{
 		buff[bwr] = '\0';
 		if (s[fd] == NULL)
@@ -73,5 +77,7 @@ int			get_next_line(int fd, char **line)
 		if (ft_strchr(s[fd], '\n'))
 			break ;
 	}
+	free(buff);
+	buff = NULL;
 	return (ft_comp(bwr, fd, s, line));
 }
