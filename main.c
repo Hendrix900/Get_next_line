@@ -30,6 +30,7 @@ int	main()
 	b = get_next_line(fd, &a);
 	printf("%s %d\n", a, b);
 	
+
 	/*b = get_next_line(fd, &a);
 	printf("%s %d\n", a, b);
 	b = get_next_line(fd, &a);

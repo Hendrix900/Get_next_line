@@ -12,7 +12,6 @@
 
 #include "get_next_line.h"
 
-
 static int	ft_comp_new_line(char **s, char **line)
 {
 	int		l;
@@ -55,14 +54,14 @@ static int	ft_comp(int bwr, int fd, char **s, char **line)
 
 int			get_next_line(int fd, char **line)
 {
-	char		buff[BUFFER_SIZE + 1];
+	char		*buff;
 	static char *s[4096];
 	char		*tmp;
-	int			bwr;
+	ssize_t		bwr;
 
-	if (!(buff = malloc (sizeof(char)) * (BUFFER_SIZE + 1))) 
-			|| fd < 0 || line == 0)
-			return (-1);
+	if (!(buff = malloc(sizeof(char) * (BUFFER_SIZE + 1)))
+		|| fd < 0 || line == 0)
+		return (-1);
 	while ((bwr = read(fd, buff, BUFFER_SIZE)) > 0)
 	{
 		buff[bwr] = '\0';
