@@ -6,78 +6,47 @@
 /*   By: ccastill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 23:17:01 by ccastill          #+#    #+#             */
-/*   Updated: 2019/12/05 23:17:01 by ccastill         ###   ########.fr       */
+/*   Updated: 2020/01/27 14:00:58 by ccastill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-
-static int	ft_comp_new_line(char **s, char **line)
+static int ft_compare(bwr, fd, s, line)
 {
-	int		l;
-	char	*tmp;
 
-	l = 0;
-	while ((*s)[l] != '\n' && (*s)[l] != '\0')
-		l++;
-	if ((*s)[l] == '\n')
-	{
-		*line = ft_substr(*s, 0, l);
-		tmp = ft_strdup(&(*s)[l + 1]);
-		free(*s);
-		*s = tmp;
-	}
-	else if ((*s)[l] == '\0')
-	{
-		*line = ft_strdup(*s);
-		free(*s);
-		*s = NULL;
-		return (0);
-	}
-	return (1);
-}
 
-static int	ft_comp(int bwr, int fd, char **s, char **line)
-{
-	if (bwr < 0)
-		return (-1);
-	else if (bwr == 0 && s[fd] == NULL)
-	{
-		*line = ft_strdup("");
-		free(*s);
-		*s = NULL;
-		return (0);
-	}
-	else
-		return (ft_comp_new_line(&s[fd], line));
+
+
+	
 }
 
 int			get_next_line(int fd, char **line)
 {
-	char		buff[BUFFER_SIZE + 1];
-	static char *s[4096];
-	char		*tmp;
-	int			bwr;
+	char		*buff; // Creamos una cadena char para almacenar el tamaño de memoria necesario.
+	static char *s[4096]; // Creamos una cadena estática que permita manejar el contenido del fd a lo alrgo de las funciones.
+	char		*tmp; // Cadena temporal donde almacenaremos 
+	int			bwr; // Una variable de tipo entero para allmacenar los bytes que han sido leidos.
 
-	if (!(buff = malloc (sizeof(char)) * (BUFFER_SIZE + 1))) 
-			|| fd < 0 || line == 0)
-			return (-1);
-	while ((bwr = read(fd, buff, BUFFER_SIZE)) > 0)
+	if (!(buff = malloc(sizeof(char) * (BUFFER_SIZE + 1))) // Se reserva la  memoria necesaria en buff del tamaño del BUFFER_SIZE que pasan en los flags.
+		|| fd < 0 || line == 0)
+		return (-1); // En caso de que no se pase un fd o un line menor que cero o cero, la función devolverá -1 indicando un error.
+		
+	while ((bwr = read(fd, buff, BUFFER_SIZE)) > 0) // Mientras que el bwr sea mayor que 0 entra. Lee el fd, lo almacena en el array (buff), leerá porciones del tamaño inicado por BUFFER_SIZE.
 	{
-		buff[bwr] = '\0';
-		if (s[fd] == NULL)
-			s[fd] = ft_strdup(buff);
+		buff[bwr] = '\0'; // Añadimos el NULL.
+		if (s[fd] == NULL) // Si el fd es NULL, 
+			s[fd] = ft_strdup(buff); // Duplicamos buff y lo introducimos en s.
 		else
 		{
-			tmp = ft_strjoin(s[fd], buff);
-			free(s[fd]);
-			s[fd] = tmp;
+			tmp = ft_strjoin(s[fd], buff); // En la cadena tmp introducimos la combinación del contenido de fd y del buff.
+			free(s[fd]); // Liberamos s
+			s[fd] = tmp; // Introducimos en s el contenido de tmp.
 		}
-		if (ft_strchr(s[fd], '\n'))
+		if (ft_strchr(s[fd], '\n')) // Si encuentra un salto de línea en s, break.
 			break ;
 	}
-	free(buff);
-	buff = NULL;
-	return (ft_comp(bwr, fd, s, line));
+	free(buff); //Se libera el buff
+	buff = NULL; // Se iguala a NULL
+	return (ft_compare(bwr, fd, s, line));
 }
