@@ -6,7 +6,7 @@
 /*   By: ccastill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 23:17:01 by ccastill          #+#    #+#             */
-/*   Updated: 2020/01/27 15:47:54 by ccastill         ###   ########.fr       */
+/*   Updated: 2020/01/27 15:48:59 by ccastill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,10 @@ int			get_next_line(int fd, char **line)
 		}
 		if (ft_strchr(s[fd], '\n')) // Si encuentra un salto de línea en s, break.
 			break ;
-	}
 
-	free(buff); //Se libera el buff
-	buff = NULL; // Se iguala a NULL
-	return (ft_compare(bwr, fd, s, line));
+		free(buff); //Se libera el buff
+		buff = NULL; // Se iguala a NULL
+		return (ft_compare(bwr, fd, s, line));
+	}
+}
 
