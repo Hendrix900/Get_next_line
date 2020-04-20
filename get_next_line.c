@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccastill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: carlos <carlos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 23:17:01 by ccastill          #+#    #+#             */
-/*   Updated: 2020/01/27 15:48:59 by ccastill         ###   ########.fr       */
+/*   Updated: 2020/04/17 17:35:38 by carlos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 int			get_next_line(int fd, char **line)
 {
 	char		*buff; // Creamos una cadena char para almacenar el tamaño de memoria necesario.
-	static char *s[4096]; // Creamos una cadena estática que permita manejar el contenido del fd a lo alrgo de las funciones.
+	static char *s[4096]; // Creamos una cadena estática que permita manejar el contenido del fd a lo largo de las funciones.
 	char		*tmp; // Cadena temporal donde almacenaremos 
 	int			bwr; // Una variable de tipo entero para allmacenar los bytes que han sido leidos.
 
