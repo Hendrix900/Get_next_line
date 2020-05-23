@@ -3,62 +3,62 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlos <carlos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ccastill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 23:17:01 by ccastill          #+#    #+#             */
-/*   Updated: 2020/05/04 11:28:51 by carlos           ###   ########.fr       */
+/*   Updated: 2020/05/23 19:04:42 by ccastill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-static int ft_line(char **line, char **s)
+static int	ft_line(char **line, char **s)
 {
-	int count;
-	char *tmp;	
+	int		count;
+	char	*tmp;
 
 	count = 0;
 	while ((*s)[count] != '\n' && (*s)[count] != '\0')
 		count++;
 	if ((*s)[count] == '\n')
-		{
-			*line = ft_substr(*s, 0, count);
-			tmp = ft_strdup(&(*s)[count + 1]);
-			free(*s);
-			*s = tmp;
-		}
+	{
+		*line = ft_substr(*s, 0, count);
+		tmp = ft_strdup(&(*s)[count + 1]);
+		free(*s);
+		*s = tmp;
+	}
 	else if ((*s)[count] == '\0')
-		{
-			*line = ft_strdup(*s);
-			free(*s);
-			*s = NULL;
-			return(0);
-		}
-		return (1);
+	{
+		*line = ft_strdup(*s);
+		free(*s);
+		*s = NULL;
+		return (0);
+	}
+	return (1);
 }
 
-static int ft_check(char **s, int  bwr, int fd, char **line)
+static int	ft_check(char **s, int bwr, int fd, char **line)
 {
-		if (bwr < 0)
-			return (-1);
-		else if (bwr == 0 && s[fd] == NULL)
-		{
-			*line = ft_strdup("");
-			free(*s);
-			*s = NULL;
-			return (0);		
-		}
-		else
-			return(ft_line(line, &s[fd]));
+	if (bwr < 0)
+		return (-1);
+	else if (bwr == 0 && s[fd] == NULL)
+	{
+		*line = ft_strdup("");
+		free(*s);
+		*s = NULL;
+		return (0);
+	}
+	else
+		return (ft_line(line, &s[fd]));
 }
 
 int			get_next_line(int fd, char **line)
 {
-	static char *s[4096];
-	int	bwr;
-	char *buff;
-	char *temp;
-	
+	static char	*s[4096];
+	int			bwr;
+	char		*buff;
+	char		*temp;
+
 	if (!(buff = malloc(sizeof(char) * (BUFFER_SIZE + 1)))
 		|| fd < 0 || line == 0)
 		return (-1);
@@ -75,8 +75,8 @@ int			get_next_line(int fd, char **line)
 		}
 		if (ft_strchr(s[fd], '\n'))
 			break ;
-	}	
+	}
 	free(buff);
 	buff = NULL;
-	return(ft_check(s, bwr, fd, line));
+	return (ft_check(s, bwr, fd, line));
 }
